@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bandeau Cookies – Conformité ARTCI</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="cookies.css" />
+</head>
+<body>
+
+<!-- BANNER -->
+<div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Gestion des cookies">
+  <div class="banner-inner">
+    <div class="banner-left">
+      <div class="banner-header">
+        <div class="cookie-icon">🍪</div>
+        <h2 class="banner-title">Ce site utilise des cookies</h2>
+      </div>
+      <p class="banner-text">
+        Nous utilisons des cookies pour assurer le bon fonctionnement du site, mesurer l'audience et personnaliser votre expérience. Les cookies non essentiels ne seront déposés qu'avec votre consentement, conformément aux exigences de l'ARTCI en matière de protection des données à caractère personnel.
+      </p>
+      <div class="banner-links">
+        <a onclick="openPolitique()">Politique de cookies</a>
+        <!-- <a href="/cookies">Politique de cookies</a>  -->
+        <a onclick="openPolitique()">Politique de confidentialité</a>
+        <!-- <a href="/politique">Politique de confidentialité</a> -->
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-accept" onclick="acceptAll()">✓ Accepter les cookies</button>
+      <button class="btn btn-refuse"  onclick="refuseAll()">✕ Refuser</button>
+      <button class="btn btn-settings" onclick="openSettings()">⚙ Paramétrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- PARAMÉTRAGE MODAL -->
+<div id="cookie-modal" role="dialog" aria-modal="true" aria-label="Paramètres des cookies">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Paramètres des cookies</h3>
+      <button class="modal-close" onclick="closeSettings()" aria-label="Fermer">✕</button>
+    </div>
+
+    <p class="modal-desc">
+      Vous pouvez personnaliser vos préférences ci-dessous. Les cookies essentiels sont nécessaires au fonctionnement du site et ne peuvent pas être désactivés. Votre choix sera mémorisé pendant 13 mois maximum.
+    </p>
+
+    <!-- Essentiels -->
+    <div class="cookie-category">
+      <div class="category-row">
+        <span class="category-name">Cookies essentiels</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="badge-required">Obligatoires</span>
+          <label class="toggle">
+            <input type="checkbox" checked disabled>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <p class="category-desc">Indispensables au fonctionnement du site (session, sécurité, préférences de navigation). Ils ne collectent pas de données personnelles.</p>
+    </div>
+
+    <!-- Analytics -->
+    <div class="cookie-category">
+      <div class="category-row">
+        <span class="category-name">Cookies analytiques</span>
+        <label class="toggle">
+          <input type="checkbox" id="pref-analytics">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <p class="category-desc">Nous permettent de mesurer l'audience du site (pages vues, parcours utilisateurs) afin d'améliorer nos services. Les données sont anonymisées.</p>
+    </div>
+
+    <!-- Marketing -->
+    <div class="cookie-category">
+      <div class="category-row">
+        <span class="category-name">Cookies marketing</span>
+        <label class="toggle">
+          <input type="checkbox" id="pref-marketing">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <p class="category-desc">Permettent d'afficher des contenus personnalisés et de mesurer l'efficacité de nos communications. Ces cookies peuvent partager des données avec des partenaires tiers.</p>
+    </div>
+
+    <!-- Fonctionnels -->
+    <div class="cookie-category">
+      <div class="category-row">
+        <span class="category-name">Cookies fonctionnels</span>
+        <label class="toggle">
+          <input type="checkbox" id="pref-functional">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <p class="category-desc">Mémorisent vos préférences (langue, région, thème) pour personnaliser votre expérience de navigation.</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-refuse"  onclick="refuseAll()">Tout refuser</button>
+      <button class="btn btn-accept"  onclick="saveSettings()">Enregistrer mes choix</button>
+    </div>
+  </div>
+</div>
+
+<!-- POLITIQUE MODAL -->
+<div id="politique-modal" role="dialog" aria-modal="true" aria-label="Politique de cookies">
+  <div class="politique-box">
+    <h2>Politique de cookies</h2>
+    <!-- <p class="last-update">Dernière mise à jour : mai 2026</p> -->
+
+    <h3>1. Qu'est-ce qu'un cookie ?</h3>
+    <p>Un « cookie » est une chaîne d'informations qui vous attribue un identifiant unique que nous stockons sur votre ordinateur. Votre navigateur fournit ensuite cet identifiant chaque fois que vous accédez au Site. Nous utilisons des cookies pour suivre les services que vous avez utilisés, enregistrer vos préférences, vous garder connecté au Site, faciliter vos transactions et suivre les pages que vous visitez.</p>
+
+    <h3>2. Pourquoi utilisons-nous des cookies ?</h3>
+    <p>Nous utilisons des cookies pour :</p>
+    <ul>
+      <li>Assurer le bon fonctionnement technique du site ;</li>
+      <li>Mesurer l'audience et analyser la navigation ;</li>
+      <li>Mémoriser vos préférences ;</li>
+      <li>Vous proposer des contenus adaptés à vos centres d'intérêt.</li>
+    </ul>
+
+    <h3>3. Quels cookies utilisons-nous ?</h3>
+    <ul>
+      <li><strong>Essentiels</strong> – Ce sont des cookies internes, nécessaires au bon fonctionnement du Site. Leur désactivation peut affecter certaines fonctionnalités.</li>
+      <li><strong>Cookies publicitaires</strong> – Placés par des annonceurs pour afficher des publicités pertinentes. Ces cookies collectent des informations sur vos visites sur le Site et d'autres sites web.</li>
+      <li><strong>Cookies d'analyse</strong> –  Utilisés pour surveiller comment les utilisateurs accèdent au Site et interagissent avec celui-ci. Ils nous permettent d’améliorer nos services.</li>
+      <li><strong>Cookies de personnalisation</strong> – Ils reconnaissent les visiteurs réguliers et enregistrent leurs préférences.</li>
+      <li><strong>Cookies de sécurité</strong> – Utilisés pour authentifier les utilisateurs et protéger leurs données.</li>
+      <li><strong>Cookies de gestion du site</strong> – Conservent votre session active et vos données saisies d'une page à l'autre</li>
+      <li><strong>Cookies tiers</strong> – Placés par des services tiers pour collecter certaines informations. Ils peuvent être désactivés dans votre navigateur.</li>
+      <!--<li><strong>Analytiques</strong> – mesure d'audience (ex. : Google Analytics) ;</li>-->
+      <!--<li><strong>Marketing</strong> – personnalisation publicitaire ;</li>-->
+      <!-- <li><strong>Fonctionnels</strong> – mémorisation de vos préférences.</li> -->
+    </ul>
+
+    <!-- 
+    <h3>4. Durée de conservation</h3>
+    <p>Votre consentement est conservé au maximum 13 mois. Au-delà, votre accord vous sera à nouveau demandé.</p>
+    -->
+    <h3>5. Vos droits</h3>
+    <p>Conformément à la réglementation en vigueur et aux exigences de l'ARTCI, vous pouvez à tout moment :</p>
+    <ul>
+      <li>Retirer votre consentement via le bouton « Gérer mes cookies » ;</li>
+      <li>Accéder, rectifier ou supprimer vos données en nous contactant à <strong>contact@paymetrust.net</strong>.</li>
+    </ul>
+
+    <h3>6. Blocage des cookies non essentiels</h3>
+    <p>Aucun cookie non essentiel n'est déposé avant le recueil de votre consentement explicite, conformément aux bonnes pratiques de protection des données.</p>
+
+    <button class="pclose-btn" onclick="closePolitique()">Fermer</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- BOUTON RETRAIT CONSENTEMENT -->
+<button id="revoke-btn" onclick="revokeConsent()" title="Modifier mes préférences cookies">
+  🍪 Gérer mes cookies
+</button>
+
+<script>
+  /* ── Helpers ── */
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 86400000);
+    document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=Lax`;
+  }
+  function getCookie(name) {
+    const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : null;
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+  function hideBanner() {
+    const b = document.getElementById('cookie-banner');
+    b.style.transform = 'translateY(100%)';
+    b.style.transition = 'transform 0.4s ease';
+    setTimeout(() => b.style.display = 'none', 400);
+    document.getElementById('revoke-btn').classList.add('visible');
+  }
+
+  /* ── Actions ── */
+  function acceptAll() {
+    setCookie('cookie_consent', 'all', 395); // Consentement global
+    // Consentement granulaire (pour analytics, marketing, fonctionnels)
+    //setCookie('cookie_analytics', 'true', 395);
+    //setCookie('cookie_marketing', 'true', 395);
+    //setCookie('cookie_functional', 'true', 395);
+    setCookie('cookie_analytics', 'true', 395);
+    setCookie('cookie_marketing', 'true', 395);
+    setCookie('cookie_functional', 'true', 395);
+    setCookie('cookie_essential', 'true', 395);
+    setCookie('cookie_security', 'true', 395);
+    setCookie('cookie_preferences', 'true', 395);
+    hideBanner();
+    closeSettings();
+    showToast('✓ Tous les cookies ont été acceptés');
+    loadNonEssentialScripts({ analytics: true, marketing: true, functional: true });
+  }
+
+  function refuseAll() {
+    setCookie('cookie_consent', 'essential', 395);
+    setCookie('cookie_analytics', 'false', 395);
+    setCookie('cookie_marketing', 'false', 395);
+    setCookie('cookie_functional', 'false', 395);
+    //setCookie('cookie_essential', 'true', 395);
+    setCookie('cookie_security', 'false', 395);
+    setCookie('cookie_preferences', 'false', 395);
+    hideBanner();
+    closeSettings();
+    showToast('✕ Seuls les cookies essentiels sont actifs');
+  }
+
+  function saveSettings() {
+    const analytics  = document.getElementById('pref-analytics').checked;
+    const marketing  = document.getElementById('pref-marketing').checked;
+    const functional = document.getElementById('pref-functional').checked;
+    setCookie('cookie_consent', 'custom', 395);
+    setCookie('cookie_analytics',  analytics  ? 'true' : 'false', 395);
+    setCookie('cookie_marketing',  marketing  ? 'true' : 'false', 395);
+    setCookie('cookie_functional', functional ? 'true' : 'false', 395);
+    hideBanner();
+    closeSettings();
+    showToast('✓ Vos préférences ont été enregistrées');
+    loadNonEssentialScripts({ analytics, marketing, functional });
+  }
+
+  function revokeConsent() {
+    // Clear all consent cookies
+    ['cookie_consent','cookie_analytics','cookie_marketing','cookie_functional'].forEach(c => {
+      document.cookie = `${c}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+    });
+    document.getElementById('revoke-btn').classList.remove('visible');
+    const b = document.getElementById('cookie-banner');
+    b.style.display = '';
+    b.style.transform = 'translateY(0)';
+    b.style.transition = '';
+    showToast('↩ Vos préférences ont été réinitialisées');
+  }
+
+  /* ── Modals ── */
+  function openSettings() {
+    document.getElementById('cookie-modal').classList.add('open');
+    // Restore toggle state from cookies
+    document.getElementById('pref-analytics').checked  = getCookie('cookie_analytics')  === 'true';
+    document.getElementById('pref-marketing').checked  = getCookie('cookie_marketing')  === 'true';
+    document.getElementById('pref-functional').checked = getCookie('cookie_functional') === 'true';
+  }
+  function closeSettings() { document.getElementById('cookie-modal').classList.remove('open'); }
+  function openPolitique() { document.getElementById('politique-modal').classList.add('open'); }
+  function closePolitique() { document.getElementById('politique-modal').classList.remove('open'); }
+
+  // Close modals on backdrop click
+  document.getElementById('cookie-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('cookie-modal')) closeSettings();
+  });
+  document.getElementById('politique-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('politique-modal')) closePolitique();
+  });
+
+  /* ── Script loader (blocage avant consentement) ── */
+  function loadNonEssentialScripts({ analytics, marketing, functional }) {
+    if (analytics) {
+      console.log('[Cookies] Analytics activés');
+    }
+    if (marketing) console.log('[Cookies] Marketing activés');
+    if (functional) console.log('[Cookies] Fonctionnels activés');
+  }
+
+  /* ── Init : vérifier consentement existant ── */
+  window.addEventListener('DOMContentLoaded', () => {
+    const consent = getCookie('cookie_consent');
+    if (consent) {
+      // Consentement déjà donné : cacher banner, montrer bouton retrait
+      document.getElementById('cookie-banner').style.display = 'none';
+      document.getElementById('revoke-btn').classList.add('visible');
+      // Réactiver scripts selon préférences
+      loadNonEssentialScripts({
+        analytics:  getCookie('cookie_analytics')  === 'true',
+        marketing:  getCookie('cookie_marketing')  === 'true',
+        functional: getCookie('cookie_functional') === 'true',
+      });
+    }
+  });
+</script>
+</body>
+</html>

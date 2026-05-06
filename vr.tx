@@ -1,0 +1,246 @@
+import { useEffect, useState } from "react"
+
+export default function CookieManager() {
+  const [visible, setVisible] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [policyOpen, setPolicyOpen] = useState(false)
+  const [toast, setToast] = useState("")
+  const [showRevoke, setShowRevoke] = useState(false)
+
+  const [prefs, setPrefs] = useState({
+    analytics: false,
+    marketing: false,
+    functional: false,
+  })
+
+  /* ───────── COOKIES ───────── */
+  const setCookie = (name, value, days) => {
+    const d = new Date()
+    d.setTime(d.getTime() + days * 86400000)
+    document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=Lax`
+  }
+
+  const getCookie = (name) => {
+    const m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")
+    return m ? m.pop() : null
+  }
+
+  const showToast = (msg) => {
+    setToast(msg)
+    setTimeout(() => setToast(""), 3000)
+  }
+
+  /* ───────── ACTIONS ───────── */
+  const acceptAll = () => {
+    setCookie("cookie_consent", "all", 395)
+    setCookie("cookie_analytics", "true", 395)
+    setCookie("cookie_marketing", "true", 395)
+    setCookie("cookie_functional", "true", 395)
+
+    setVisible(false)
+    setSettingsOpen(false)
+    setShowRevoke(true)
+    showToast("✓ Tous les cookies acceptés")
+  }
+
+  const refuseAll = () => {
+    setCookie("cookie_consent", "essential", 395)
+    setCookie("cookie_analytics", "false", 395)
+    setCookie("cookie_marketing", "false", 395)
+    setCookie("cookie_functional", "false", 395)
+
+    setVisible(false)
+    setSettingsOpen(false)
+    setShowRevoke(true)
+    showToast("✕ Cookies refusés")
+  }
+
+  const saveSettings = () => {
+    setCookie("cookie_consent", "custom", 395)
+    setCookie("cookie_analytics", prefs.analytics, 395)
+    setCookie("cookie_marketing", prefs.marketing, 395)
+    setCookie("cookie_functional", prefs.functional, 395)
+
+    setVisible(false)
+    setSettingsOpen(false)
+    setShowRevoke(true)
+    showToast("✓ Préférences enregistrées")
+  }
+
+  const revokeConsent = () => {
+    ["cookie_consent","cookie_analytics","cookie_marketing","cookie_functional"].forEach(c => {
+      document.cookie = `${c}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`
+    })
+
+    setShowRevoke(false)
+    setVisible(true)
+    showToast("↩ Consentement réinitialisé")
+  }
+
+  /* ───────── INIT ───────── */
+  useEffect(() => {
+    const consent = getCookie("cookie_consent")
+
+    if (consent) {
+      setShowRevoke(true)
+      setPrefs({
+        analytics: getCookie("cookie_analytics") === "true",
+        marketing: getCookie("cookie_marketing") === "true",
+        functional: getCookie("cookie_functional") === "true",
+      })
+    } else {
+      setVisible(true)
+    }
+  }, [])
+
+  /* ───────── UI ───────── */
+  return (
+    <>
+      {/* BANNER */}
+      {visible && (
+        <div style={styles.banner}>
+          <div style={styles.inner}>
+            <div>
+              <div style={styles.header}>
+                <div style={styles.icon}>🍪</div>
+                <h2 style={styles.title}>Ce site utilise des cookies</h2>
+              </div>
+
+              <p style={styles.text}>
+                Nous utilisons des cookies pour assurer le bon fonctionnement du site et améliorer votre expérience.
+              </p>
+
+              <div style={styles.links}>
+                <span onClick={() => setPolicyOpen(true)}>Politique de cookies</span>
+                <span onClick={() => setPolicyOpen(true)}>Confidentialité</span>
+              </div>
+            </div>
+
+            <div style={styles.buttons}>
+              <button style={styles.accept} onClick={acceptAll}>Accepter</button>
+              <button style={styles.refuse} onClick={refuseAll}>Refuser</button>
+              <button style={styles.settings} onClick={() => setSettingsOpen(true)}>Paramétrer</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SETTINGS MODAL */}
+      {settingsOpen && (
+        <div style={styles.overlay}>
+          <div style={styles.modal}>
+            <h3>Paramètres des cookies</h3>
+
+            {["analytics","marketing","functional"].map(type => (
+              <label key={type} style={styles.row}>
+                {type}
+                <input
+                  type="checkbox"
+                  checked={prefs[type]}
+                  onChange={(e) =>
+                    setPrefs({ ...prefs, [type]: e.target.checked })
+                  }
+                />
+              </label>
+            ))}
+
+            <div style={{ marginTop: 20 }}>
+              <button onClick={refuseAll}>Tout refuser</button>
+              <button onClick={saveSettings}>Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* POLICY MODAL */}
+      {policyOpen && (
+        <div style={styles.overlay}>
+          <div style={styles.modal}>
+            <h2>Politique de cookies</h2>
+            <p>Contenu de ta politique ici…</p>
+            <button onClick={() => setPolicyOpen(false)}>Fermer</button>
+          </div>
+        </div>
+      )}
+
+      {/* TOAST */}
+      {toast && <div style={styles.toast}>{toast}</div>}
+
+      {/* REVOKE */}
+      {showRevoke && (
+        <button style={styles.revoke} onClick={revokeConsent}>
+          🍪 Gérer mes cookies
+        </button>
+      )}
+    </>
+  )
+}
+
+/* ───────── STYLES ───────── */
+const styles = {
+  banner: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    background: "#fff",
+    padding: 24,
+    boxShadow: "0 -4px 30px rgba(0,0,0,0.1)",
+    zIndex: 9999,
+  },
+  inner: {
+    maxWidth: 1100,
+    margin: "0 auto",
+    display: "flex",
+    justifyContent: "space-between",
+    gap: 20,
+  },
+  header: { display: "flex", gap: 10, alignItems: "center" },
+  icon: { fontSize: 22 },
+  title: { margin: 0 },
+  text: { fontSize: 14, color: "#555" },
+  links: { display: "flex", gap: 15, fontSize: 13, cursor: "pointer" },
+
+  buttons: { display: "flex", flexDirection: "column", gap: 10 },
+
+  accept: { background: "#C1440E", color: "#fff", padding: 10, border: "none" },
+  refuse: { background: "#eee", padding: 10, border: "none" },
+  settings: { border: "1px solid #C1440E", padding: 10 },
+
+  overlay: {
+    position: "fixed",
+    inset: 0,
+    background: "rgba(0,0,0,0.4)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modal: { background: "#fff", padding: 20, borderRadius: 10 },
+
+  row: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+
+  toast: {
+    position: "fixed",
+    bottom: 20,
+    left: "50%",
+    transform: "translateX(-50%)",
+    background: "#111",
+    color: "#fff",
+    padding: "10px 20px",
+    borderRadius: 20,
+  },
+
+  revoke: {
+    position: "fixed",
+    bottom: 20,
+    left: 20,
+    background: "#fff",
+    padding: "8px 14px",
+    borderRadius: 20,
+    border: "1px solid #ddd",
+  },
+}
