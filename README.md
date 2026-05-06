@@ -1,0 +1,1 @@
+# Cookie banner for framer website
